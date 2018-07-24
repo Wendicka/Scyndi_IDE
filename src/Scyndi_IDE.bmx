@@ -22,10 +22,20 @@ Rem
 	to the project the exceptions are needed for.
 Version: 18.07.24
 End Rem
-strict
-framework maxgui.drivers
-import    tricky_units.mkl_version
+Strict
+Framework maxgui.drivers
+Import    brl.eventqueue
+Import    brl.pngloader
+Import    tricky_units.MKL_Version
 
+Import "incbin/incbin.bmx"
 
 MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.24"
 MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
+
+Include "inc/gui.bmx"
+Include "inc/events.bmx"
+
+Include "inc/finit.bmx"	' Fini + init hahah... this is the last init stuff before running
+
+Include "inc/run.bmx"	' Run

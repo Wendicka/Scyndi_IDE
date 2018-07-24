@@ -1,0 +1,3 @@
+Strict
+
+Incbin "Scyndi.png"

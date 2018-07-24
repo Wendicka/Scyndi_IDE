@@ -6,4 +6,5 @@ MKL*
 *.icns
 src/incbin/*.png
 .bmx
-
+*.exe
+*.app
