@@ -24,7 +24,7 @@ Version: 18.07.24
 End Rem
 strict
 framework maxgui.drivers
-import    tricky_units.mkl
+import    tricky_units.mkl_version
 
 
 MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.24"
