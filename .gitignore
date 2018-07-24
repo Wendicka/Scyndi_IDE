@@ -5,4 +5,5 @@ MKL*
 .DS_Store
 *.icns
 src/incbin/*.png
+.bmx
 
