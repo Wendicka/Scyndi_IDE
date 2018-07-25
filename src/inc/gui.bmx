@@ -38,6 +38,21 @@ SetGadgetPixmap scyndi,LoadPixmap("incbin::Scyndi.png")
 ' Quick buttons
 Global quickbutton_pan:tgadget = CreatePanel(96,0,SIWW-96,96,SIPan)
 SetGadgetColor quickbutton_pan,$5,0,$8
+Global qbfw=ClientWidth(quickbutton_pan)
+Global qbw = qbfw / 3
+Global qbfh=ClientHeight(quickbutton_pan)
+Global qbh = qbfh / 3
+Global qb_new    :tgadget = CreateButton("New"   ,qbw*0,qbh*0,qbw,qbh,quickbutton_pan)
+Global qb_open   :tgadget = CreateButton("Open"  ,qbw*0,qbh*1,qbw,qbh,quickbutton_pan)
+Global qb_save   :tgadget = CreateButton("Save"  ,qbw*0,qbh*2,qbw,qbh,quickbutton_pan)
+
+Global qb_cut    :tgadget = CreateButton("Cut"   ,qbw*1,qbh*0,qbw,qbh,quickbutton_pan)
+Global qb_copy   :tgadget = CreateButton("Copy"  ,qbw*1,qbh*1,qbw,qbh,quickbutton_pan)
+Global qb_paste  :tgadget = CreateButton("Paste" ,qbw*1,qbh*2,qbw,qbh,quickbutton_pan)
+
+Global qb_find   :tgadget = CreateButton("Find"   ,qbw*2,qbh*0,qbw,qbh,quickbutton_pan)
+Global qb_replace:tgadget = CreateButton("Replace",qbw*2,qbh*1,qbw,qbh,quickbutton_pan)
+Global qb_build  :tgadget = CreateButton("Build"  ,qbw*2,qbh*2,qbw,qbh,quickbutton_pan)
 
 ' Editor
 
