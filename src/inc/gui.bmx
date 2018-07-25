@@ -55,6 +55,15 @@ Global qb_replace:tgadget = CreateButton("Replace",qbw*2,qbh*1,qbw,qbh,quickbutt
 Global qb_build  :tgadget = CreateButton("Build"  ,qbw*2,qbh*2,qbw,qbh,quickbutton_pan)
 
 ' Editor
+Global tabber:tgadget = CreateTabber(0,96,SIWW,SIWH-296,SIPan)
+AddGadgetItem tabber,"Scyndi IDE"
+Global tbw = ClientWidth(tabber)
+Global tbh = ClientHeight(tabber)
+Global about:tgadget = CreateLabel("",0,0,tbw,tbh,tabber)
+SetGadgetColor about,$A,$0,$10,True
+SetGadgetColor about,$b4,$ff,0,False
+SetGadgetFont about,LookupGuiFont:TGuiFont( GUIFONT_monospaced )
+
 
 
 
@@ -97,6 +106,7 @@ Global menu_target:tgadget = CreateMenu("Target",0,menu_project)
 For Local i=0 Until Len(targets)
 	CreateMenu targets[i],5000+i,menu_target
 Next
+
 
 
 
