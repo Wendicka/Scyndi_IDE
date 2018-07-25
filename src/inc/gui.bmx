@@ -1,29 +1,5 @@
-Rem
-	Scyndi IDE
-	gui definitions
-	
-	
-	
-	(c) Jeroen P. Broks, 2018, All rights reserved
-	
-		This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		
-		This program is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-		You should have received a copy of the GNU General Public License
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-		
-	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
-	to the project the exceptions are needed for.
-Version: 18.07.25
-End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.25"
-MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
+MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.24"
+MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
 
 Global SIWin:tgadget = CreateWindow("",0,0,ClientWidth(Desktop()),ClientHeight(Desktop()),Null,window_titlebar|window_status|window_menu)
 Global SIWW = ClientWidth (SIWIN)
@@ -64,7 +40,37 @@ SetGadgetColor about,$A,$0,$10,True
 SetGadgetColor about,$b4,$ff,0,False
 SetGadgetFont about,LookupGuiFont:TGuiFont( GUIFONT_monospaced )
 
+Global pancrcol
+Type TSourcePanel
+	Field Panel:Tgadget
+	Field Source:Tgadget
+	Field Outline:Tgadget
+End Type
 
+Type Tsrccol
+	Field r:Byte
+	Field g:Byte
+	Field b:Byte
+End Type
+Global srccol:tsrccol[10]
+For Local i:Byte=0 Until 10 
+	srccol[i]=New tsrccol
+Next
+srccol[0].r=$00	srccol[0].g=$0b	srccol[0].b=$0f
+srccol[1].r=$0f	srccol[1].g=$00	srccol[1].b=$0f
+srccol[2].r=$00	srccol[2].g=$0f	srccol[2].b=$0f
+srccol[3].r=$0f	srccol[3].g=$0b	srccol[3].b=$0b
+srccol[4].r=$0b	srccol[4].g=$06	srccol[4].b=$00
+srccol[5].r=$00	srccol[5].g=$00	srccol[5].b=$0f
+srccol[6].r=$0b	srccol[6].g=$06	srccol[6].b=$00
+srccol[7].r=$0b	srccol[7].g=$0f	srccol[7].b=$00
+srccol[8].r=$00	srccol[8].g=$0f	srccol[8].b=$0b
+srccol[9].r=$0b	srccol[9].g=$00	srccol[9].b=$0f
+
+' Control console
+Global console:tgadget = CreateTextArea(0,SIWH-200,SIWW,200,SIPan)
+SetGadgetColor console,$00,$00,$00
+SetGadgetColor console,$7f,$7f,$7f,False
 
 
 ' Menu
