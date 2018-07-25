@@ -22,6 +22,9 @@ Rem
 	to the project the exceptions are needed for.
 Version: 18.07.25
 End Rem
+MKL_Version "Scyndi IDE - run.bmx","18.07.25"
+MKL_Lic     "Scyndi IDE - run.bmx","GNU General Public License 3"
+
 Repeat
 	S_WaitEvent
 	Select eid

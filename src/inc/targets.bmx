@@ -22,6 +22,9 @@ Rem
 	to the project the exceptions are needed for.
 Version: 18.07.25
 End Rem
+MKL_Version "Scyndi IDE - targets.bmx","18.07.25"
+MKL_Lic     "Scyndi IDE - targets.bmx","GNU General Public License 3"
+
 Global targets$[]
 Function init_targets()
 	Local mtargets:TList=New TList
@@ -33,7 +36,7 @@ Function init_targets()
 	targets = New String[CountList(mtargets)]
 	For Local i=0 Until CountList(mtargets)
 		targets[i]=String(mtargets.valueatindex(i))
-	next
+	Next
 End Function
 init_targets
 

@@ -22,6 +22,9 @@ Rem
 	to the project the exceptions are needed for.
 Version: 18.07.25
 End Rem
+MKL_Version "Scyndi IDE - events.bmx","18.07.25"
+MKL_Lic     "Scyndi IDE - events.bmx","GNU General Public License 3"
+
 Global EID 
 Global ESrc:TGadget 
 
