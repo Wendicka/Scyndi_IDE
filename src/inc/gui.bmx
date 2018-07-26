@@ -20,11 +20,12 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.25
+Version: 18.07.26
 End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.25"
+MKL_Version "Scyndi IDE - gui.bmx","18.07.26"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
+Global NeedFile:TList = New TList
 Global SIWin:tgadget = CreateWindow("",0,0,ClientWidth(Desktop()),ClientHeight(Desktop()),Null,window_titlebar|window_status|window_menu)
 Global SIWW = ClientWidth (SIWIN)
 Global SIWH = ClientHeight(SIWIN)
@@ -43,16 +44,16 @@ Global qbw = qbfw / 3
 Global qbfh=ClientHeight(quickbutton_pan)
 Global qbh = qbfh / 3
 Global qb_new    :tgadget = CreateButton("New"   ,qbw*0,qbh*0,qbw,qbh,quickbutton_pan)
-Global qb_open   :tgadget = CreateButton("Open"  ,qbw*0,qbh*1,qbw,qbh,quickbutton_pan)
-Global qb_save   :tgadget = CreateButton("Save"  ,qbw*0,qbh*2,qbw,qbh,quickbutton_pan)
+Global qb_open   :tgadget = CreateButton("Open"  ,qbw*0,qbh*1,qbw,qbh,quickbutton_pan)	
+Global qb_save   :tgadget = CreateButton("Save"  ,qbw*0,qbh*2,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_save
 
-Global qb_cut    :tgadget = CreateButton("Cut"   ,qbw*1,qbh*0,qbw,qbh,quickbutton_pan)
-Global qb_copy   :tgadget = CreateButton("Copy"  ,qbw*1,qbh*1,qbw,qbh,quickbutton_pan)
-Global qb_paste  :tgadget = CreateButton("Paste" ,qbw*1,qbh*2,qbw,qbh,quickbutton_pan)
+Global qb_cut    :tgadget = CreateButton("Cut"   ,qbw*1,qbh*0,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_cut
+Global qb_copy   :tgadget = CreateButton("Copy"  ,qbw*1,qbh*1,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_copy
+Global qb_paste  :tgadget = CreateButton("Paste" ,qbw*1,qbh*2,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_save
 
-Global qb_find   :tgadget = CreateButton("Find"   ,qbw*2,qbh*0,qbw,qbh,quickbutton_pan)
-Global qb_replace:tgadget = CreateButton("Replace",qbw*2,qbh*1,qbw,qbh,quickbutton_pan)
-Global qb_build  :tgadget = CreateButton("Build"  ,qbw*2,qbh*2,qbw,qbh,quickbutton_pan)
+Global qb_find   :tgadget = CreateButton("Find"   ,qbw*2,qbh*0,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_find
+Global qb_replace:tgadget = CreateButton("Replace",qbw*2,qbh*1,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_replace
+Global qb_build  :tgadget = CreateButton("Build"  ,qbw*2,qbh*2,qbw,qbh,quickbutton_pan)	ListAddLast needfile,qb_build
 
 ' Editor
 Global tabber:tgadget = CreateTabber(0,96,SIWW,SIWH-296,SIPan)
@@ -118,9 +119,11 @@ CreateMenu "",0,menu_file
 CreateMenu "Open",1002,menu_file,Key_O,modifier_command
 Global open_recent:tgadget = CreateMenu("Open Recent",0,menu_file)
 CreateMenu "",0,menu_file
-CreateMenu "Save",1003,menu_file,Key_S,modifier_command
-CreateMenu "Save As",1004,menu_file,Key_S,modifier_command | modifier_shift
+ListAddLast needfile,CreateMenu("Save",1003,menu_file,Key_S,modifier_command)
+ListAddLast needfile,CreateMenu("Save As",1004,menu_file,Key_S,modifier_command | modifier_shift)
 CreateMenu "Save All",1005,menu_file,Key_s,Modifier_command | modifier_shift | modifier_alt
+CreateMenu "",0,menu_file
+ListAddLast needfile,CreateMenu("Close",1005,Menu_file,key_W,modifier_command)
 ?Not MacOS
 CreateMenu "",0,menu_file
 CreateMenu "Quit",9999,menu_file,Key_F4,modifier_Alt
@@ -128,23 +131,23 @@ CreateMenu "Quit",9999,menu_file,Key_F4,modifier_Alt
 
 
 Global menu_edit:tgadget = CreateMenu("Edit",0,WindowMenu(SIWIN))
-CreateMenu "Undo",2001,menu_edit,key_Z,modifier_command
-CreateMenu "Redo",2002,menu_edit,key_z,modifier_command | modifier_shift
+ListAddLast needfile,CreateMenu ("Undo",2001,menu_edit,key_Z,modifier_command)
+ListAddLast needfile,CreateMenu ("Redo",2002,menu_edit,key_z,modifier_command | modifier_shift)
 CreateMenu "",0,menu_edit
 CreateMenu "Cut",2003,menu_edit,key_x,modifier_command
 CreateMenu "Copy",2004,menu_edit,key_c,modifier_command
 CreateMenu "Paste",2005,menu_edit,key_v,modifier_command
 
 Global menu_search:tgadget = CreateMenu("Search",0,WindowMenu(SIWIN))
-CreateMenu "Find",3001,menu_search,Key_f,modifier_command
-CreateMenu "Find Next",3002,Menu_search,key_g,modifier_command
+ListAddLast needfile,CreateMenu("Find",3001,menu_search,Key_f,modifier_command)
+ListAddLast needfile,CreateMenu("Find Next",3002,Menu_search,key_g,modifier_command)
 CreateMenu "",0,menu_search
-CreateMenu "Replace",3003,menu_search,Key_f,Modifier_command|modifier_shift
+ListAddLast needfile,CreateMenu("Replace",3003,menu_search,Key_f,Modifier_command|modifier_shift)
 CreateMenu "",0,menu_search
-CreateMenu "Go To Line",3004,menu_search,Key_l,modifier_command
+ListAddLast needfile,CreateMenu("Go To Line",3004,menu_search,Key_l,modifier_command)
 
 Global menu_project:Tgadget = CreateMenu("Project",0,WindowMenu(SIWIN))
-CreateMenu "Build",4001,menu_project,key_b,modifier_command
+ListAddLast needfile,CreateMenu("Build",4001,menu_project,key_b,modifier_command)
 CreateMenu "",0,menu_project
 Global menu_target:tgadget = CreateMenu("Target",0,menu_project)
 For Local i=0 Until Len(targets)

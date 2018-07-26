@@ -35,24 +35,24 @@ Function S_WaitEvent()
 End Function
 
 Type tcbfun
-	f : Function()
+	Field f()
 End Type	
 
 Type MyCallBack 
-	Field	map:tmap
+	Field	map:tmap = New tmap
 	
-	Method add(key:Object,fun:Function())
-		Local f:tbcfun = New tbsfun
+	Method add(key:Object,fun())
+		Local f:tcbfun = New tcbfun
 		f.f = fun
-		MapInsert Self,key,f
+		MapInsert map,key,f
 	End Method
 	
-	Method addnum(key,fun Function())
-		add Self,Hex(key),fun
+	Method addnum(key,fun ())
+		add Hex(key),fun
 	End Method
 	
 	Method call(key:Object)
-		tbcfun(MapValueForKey(Self,key)()
+		tcbfun(MapValueForKey(map,key)).f
 	End Method
 	
 	Method callnum(key)
@@ -62,6 +62,9 @@ End Type
 
 Global CallBack_Action:mycallback = New mycallback
 Global callback_Menu:Mycallback = New mycallback
+
+
+
 		
 		
 		
