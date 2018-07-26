@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.25
 End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.26"
+MKL_Version "Scyndi IDE - gui.bmx","18.07.25"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
 Global NeedFile:TList = New TList
@@ -87,8 +87,8 @@ Type TSourcePanel
 		panel = CreatePanel(0,0,tbw,tbh,tabber)
 		Local olc=pancrcol+1
 		If olc>=10 olc=0
-		outline = CreateListBox(0,0,tbw*.25,tbh,tabber)
-		source = CreateTextArea(tbw*.25,0,tbw*.75,tbh,tabber)
+		outline = CreateListBox(0,0,tbw*.25,tbh,panel)
+		source = CreateTextArea(tbw*.25,0,tbw*.75,tbh,panel)
 		SetGadgetColor outline,srccol[olc].r,srccol[olc].g,srccol[olc].b,True
 		SetGadgetColor outline,srccol[olc].r*$10,srccol[olc].g*$10,srccol[olc].b*$10,False
 		SetGadgetColor source,$ff,$ff,$ff,False
@@ -112,14 +112,31 @@ srccol[7].r=$0b	srccol[7].g=$0f	srccol[7].b=$00
 srccol[8].r=$00	srccol[8].g=$0f	srccol[8].b=$0b
 srccol[9].r=$0b	srccol[9].g=$00	srccol[9].b=$0f
 
-Function SelectTab(tab)
-	SelectGadgetItem tabber,tab
-	about.visible=tab=0
+Function SelectTab(atab=-1)
+	Local tab=atab
+	If tab<0 
+		tab=SelectedGadgetItem(tabber)
+		'DebugLog "Selected tab: "+tab
+	Else
+		SelectGadgetItem tabber,tab
+		'DebugLog "program wants me to go to tab:"+tab
+	EndIf
+	about.SetShow tab=0
+	'DebugLog about.visible+" tab:"+Len(tabber.kids)
 	For Local i=0 Until CountList(sources)
-		tsourcepanel(sources.valueatindex(i)).panel.visible=tab=i+1
+		Local pan:tsourcepanel= tsourcepanel(sources.valueatindex(i))
+		pan.panel.setshow tab=i+1
+		'pan.outline.visible=tab=i+1
+		'pan.source.setshow tab=i+1
+		'DebugLog "source: "+i+" > "+Int(i+1)+" > "+tab+"  R:"+Byte(tab=i+1)+"   V:"+pan.panel.visible
+		
 	Next
 	HighLight
 End Function
+Function tabhit()
+	selecttab
+EndFunction
+
 
 ' Control console
 Global console:tgadget = CreateTextArea(0,SIWH-200,SIWW,200,SIPan)
