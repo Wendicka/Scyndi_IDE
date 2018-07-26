@@ -30,6 +30,8 @@ Repeat
 	Select eid
 		Case event_gadgetaction
 			CallBack_Action.call esrc
+		Case event_menuaction
+			callback_Menu.callnum edata
 		Case event_windowclose,event_appterminate
 			End 
 	End Select

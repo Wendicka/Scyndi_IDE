@@ -91,7 +91,7 @@ Type TSourcePanel
 		SetGadgetColor outline,srccol[olc].r,srccol[olc].g,srccol[olc].b,True
 		SetGadgetColor outline,srccol[olc].r*$10,srccol[olc].g*$10,srccol[olc].b*$10,False
 		SetGadgetColor source,$ff,$ff,$ff,False
-		SetGadgetColor panel,srccol[pancrcol].r,srccol[pancrcol].g,srccol[pancrcol].b,True
+		SetGadgetColor source,srccol[pancrcol].r,srccol[pancrcol].g,srccol[pancrcol].b,True
 		pancrcol=olc
 	End Method
 End Type

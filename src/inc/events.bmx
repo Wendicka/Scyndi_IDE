@@ -27,11 +27,13 @@ MKL_Lic     "Scyndi IDE - events.bmx","GNU General Public License 3"
 
 Global EID 
 Global ESrc:TGadget 
+Global Edata
 
 Function S_WaitEvent()
 	WaitEvent
 	EID=EventID()
 	ESrc=tgadget(EventSource())
+	edata=EventData()
 End Function
 
 Type tcbfun
@@ -54,7 +56,7 @@ Type MyCallBack
 	Method call(key:Object)
 		If MapContains(map,key)
 			tcbfun(MapValueForKey(map,key)).f
-		endif
+		EndIf
 	End Method
 	
 	Method callnum(key)
