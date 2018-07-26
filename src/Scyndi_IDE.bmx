@@ -20,22 +20,28 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.25
 End Rem
 Strict
 Framework maxgui.drivers
 Import    brl.eventqueue
 Import    brl.pngloader
 Import    tricky_units.MKL_Version
+Import    tricky_units.GINI
+Import    tricky_units.Dirry
 
 Import "incbin/incbin.bmx"
 
-MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.26"
+MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.25"
 MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
 
 Include "inc/targets.bmx"
 Include "inc/gui.bmx"
 Include "inc/events.bmx"
+
+Include "inc/crash.bmx"
+Include "inc/config.bmx"
+Include "inc/editor.bmx"
 
 Include "inc/finit.bmx"	' Fini + init hahah... this is the last init stuff before running
 
