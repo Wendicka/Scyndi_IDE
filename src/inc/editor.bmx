@@ -59,6 +59,8 @@ End Function
 Function NewFile()
 	DoNewFile
 End Function
+CallBack_Action.Add qb_new,NewFile
+CallBack_Menu.AddNum 1001,NewFile
 
 Global hlcd=1000
 
@@ -163,6 +165,29 @@ Function HighLight()
 	End Select
 End Function
 
+Function cbcut()
+	Local g:tgadget=ActiveGadget()
+	Local c=GadgetClass(G)
+	'Print "cut"
+	If c=gadget_textarea Or c=gadget_textfield GadgetCut g
+End Function
+Function cbcopy()
+	Local g:tgadget=ActiveGadget()
+	Local c=GadgetClass(G)
+	'Print "copy"
+	If c=gadget_textarea Or c=gadget_textfield GadgetCopy g
+End Function
+Function cbpaste()
+	Local g:tgadget=ActiveGadget()
+	Local c=GadgetClass(G)
+	'Print "paste"
+	If c=gadget_textarea Or c=gadget_textfield GadgetPaste g
+End Function
+callback_action.add	qb_cut,		cbcut
+callback_action.add	qb_copy,	cbcopy
+callback_action.add	qb_paste,	cbpaste
+callback_menu.addnum	2003,		cbcut
+callback_menu.addnum	2004,		cbcopy
+callback_menu.addnum	2005,		cbpaste
 
-CallBack_Action.Add qb_new,NewFile
-CallBack_Menu.AddNum 1001,NewFile
+
