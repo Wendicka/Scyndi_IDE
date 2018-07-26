@@ -29,8 +29,8 @@ Global EID
 Global ESrc:TGadget 
 Global Edata
 
-Function S_WaitEvent()
-	WaitEvent
+Function S_PollEvent()
+	PollEvent
 	EID=EventID()
 	ESrc=tgadget(EventSource())
 	edata=EventData()

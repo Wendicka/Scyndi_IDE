@@ -63,7 +63,8 @@ Global tbh = ClientHeight(tabber)
 Global about:tgadget = CreateLabel("",0,0,tbw,tbh,tabber)
 SetGadgetColor about,$A,$0,$10,True
 SetGadgetColor about,$b4,$ff,0,False
-SetGadgetFont about,LookupGuiFont:TGuiFont( GUIFONT_monospaced )
+Global fwfont:Tguifont,LookupGuiFont( GUIFONT_monospaced )
+SetGadgetFont about,fwfont
 
 Type Tsrccol
 	Field r:Byte
@@ -92,6 +93,7 @@ Type TSourcePanel
 		SetGadgetColor outline,srccol[olc].r*$10,srccol[olc].g*$10,srccol[olc].b*$10,False
 		SetGadgetColor source,$ff,$ff,$ff,False
 		SetGadgetColor source,srccol[pancrcol].r,srccol[pancrcol].g,srccol[pancrcol].b,True
+		SetGadgetFont  source,fwfont
 		pancrcol=olc
 	End Method
 End Type
@@ -111,10 +113,12 @@ srccol[8].r=$00	srccol[8].g=$0f	srccol[8].b=$0b
 srccol[9].r=$0b	srccol[9].g=$00	srccol[9].b=$0f
 
 Function SelectTab(tab)
+	SelectGadgetItem tabber,tab
 	about.visible=tab=0
 	For Local i=0 Until CountList(sources)
 		tsourcepanel(sources.valueatindex(i)).panel.visible=tab=i+1
 	Next
+	HighLight
 End Function
 
 ' Control console

@@ -26,10 +26,16 @@ MKL_Version "Scyndi IDE - run.bmx","18.07.26"
 MKL_Lic     "Scyndi IDE - run.bmx","GNU General Public License 3"
 
 Repeat
-	S_WaitEvent
+	S_pollEvent
+	If hlcd>-100 hlcd:-1
+	If hlcd=0
+		Highlight
+	EndIf
+	'If Right(hlcd,2)="00" Print hlcd
 	Select eid
 		Case event_gadgetaction
 			CallBack_Action.call esrc
+			hlcd=20000
 		Case event_menuaction
 			callback_Menu.callnum edata
 		Case event_windowclose,event_appterminate
