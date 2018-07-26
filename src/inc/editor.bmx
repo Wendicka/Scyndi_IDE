@@ -71,6 +71,7 @@ Function EndHLWord(P:tgadget,invar Var,c,str$)
 	ElseIf c<>invar 
 		word=str[invar..c]	
 	EndIf
+	DebugLog "endword:"+word
 	Select Chr(word[0])
 		Case "$","%","0","1","2","3","4","5","6","7","8","9"
 			FormatTextAreaText p,$00,$b4,$ff,0,invar,(c-invar)+1
@@ -80,9 +81,9 @@ Function EndHLWord(P:tgadget,invar Var,c,str$)
 				keyword=keyword Or (kw=word)
 			Next
 			If keyword 
-				FormatTextAreaText p,$bf,$ff,$00,0,invar,(c-invar)+1
+				FormatTextAreaText p,$bf,$ff,$00,0,invar,(c-invar)'+1
 			Else
-				FormatTextAreaText p,$ee,$ff,$dd,0,invar,(c-invar)+1
+				FormatTextAreaText p,$ee,$ff,$dd,0,invar,(c-invar)'+1
 			EndIf
 	End Select	
 	invar=-1				
@@ -140,7 +141,12 @@ Function HighLightSSF(sp:tgadget)
 			Default
 				endhlword sp,innumber,i,src
 				endhlword sp,inword,i,src				
-		End Select
+		End Select		
+		If i+1=(Len src)
+			'DebugLog "end"
+			endhlword sp,innumber,i+1,src
+			endhlword sp,inword,i+1,src				
+		EndIf		
 	Next
 End Function
 
