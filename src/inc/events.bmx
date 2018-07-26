@@ -52,7 +52,9 @@ Type MyCallBack
 	End Method
 	
 	Method call(key:Object)
-		tcbfun(MapValueForKey(map,key)).f
+		If MapContains(map,key)
+			tcbfun(MapValueForKey(map,key)).f
+		endif
 	End Method
 	
 	Method callnum(key)

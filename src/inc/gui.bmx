@@ -113,7 +113,7 @@ srccol[9].r=$0b	srccol[9].g=$00	srccol[9].b=$0f
 Function SelectTab(tab)
 	about.visible=tab=0
 	For Local i=0 Until CountList(sources)
-		tgadget(sources.valueatindex(i)).visible=tab=i+1
+		tsourcepanel(sources.valueatindex(i)).panel.visible=tab=i+1
 	Next
 End Function
 
