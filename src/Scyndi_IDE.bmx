@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.25
+Version: 18.07.26
 End Rem
 Strict
 Framework maxgui.drivers
@@ -32,7 +32,7 @@ Import    tricky_units.Dirry
 
 Import "incbin/incbin.bmx"
 
-MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.25"
+MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.26"
 MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
 
 Include "inc/targets.bmx"
