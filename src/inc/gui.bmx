@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.25
 End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.26"
+MKL_Version "Scyndi IDE - gui.bmx","18.07.25"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
 Global NeedFile:TList = New TList
@@ -74,10 +74,14 @@ Global srccol:tsrccol[10]
 
 
 Global pancrcol
+Global noname = -1
 Type TSourcePanel
 	Field Panel:Tgadget
 	Field Source:Tgadget
 	Field Outline:Tgadget
+	Field modified:Byte
+	Field named:Byte
+	Field filename:String
 	Method New()
 		panel = CreatePanel(0,0,tbw,tbh,tabber)
 		Local olc=pancrcol+1
@@ -105,6 +109,13 @@ srccol[6].r=$0b	srccol[6].g=$06	srccol[6].b=$00
 srccol[7].r=$0b	srccol[7].g=$0f	srccol[7].b=$00
 srccol[8].r=$00	srccol[8].g=$0f	srccol[8].b=$0b
 srccol[9].r=$0b	srccol[9].g=$00	srccol[9].b=$0f
+
+Function SelectTab(tab)
+	about.visible=tab=0
+	For Local i=0 Until CountList(sources)
+		tgadget(sources.valueatindex(i)).visible=tab=i+1
+	Next
+End Function
 
 ' Control console
 Global console:tgadget = CreateTextArea(0,SIWH-200,SIWW,200,SIPan)
