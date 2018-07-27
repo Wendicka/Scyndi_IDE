@@ -38,7 +38,10 @@ Repeat
 			CallBack_Action.call esrc
 			hlcd=20000
 			For Local p:tsourcepanel = EachIn sources
-				If esrc=p.source updatesource p
+				If esrc=p.source 
+					updatesource p
+					p.modified=True
+				endif
 			Next
 		Case EVENT_GADGETSELECT	
 			For Local p:tsourcepanel = EachIn sources
