@@ -227,6 +227,7 @@ Function MySave(p:tsourcepanel,ask=1)
 	WriteString bt,TextAreaText(p.source)
 	CloseFile bt
 	SetStatusText SIWIN,p.filename+" has been saved"
+	p.modified=False
 End Function
 	
 Function Save()
@@ -255,7 +256,8 @@ Function UpdateSource(panel:tsourcepanel)
 	Local	c = cursorpos+cursorlen
 	If cursorlin Then c:-TextAreaChar(panel.source,cursorlin-1)
 	Local statustext$
-	If panel.named statustext=panel.filename
+	If panel.named statustext=panel.filename+" "
+	If panel.modified statustext:+"*"
 	statustext :+"~t"   
 	Select ExtractExt(panel.filename)
 		Case "ssf"	statustext :+ "Scyndi Source File"
