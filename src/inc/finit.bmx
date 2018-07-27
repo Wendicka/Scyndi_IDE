@@ -29,3 +29,5 @@ SetGadgetText SIWIN,"Scyndi IDE - Version "+MKL_NewestVersion()+" - Coded by: Je
 
 SetGadgetText about,"Scyndi IDE~nCoded by: Jeroen P. Broks~n(c) Jeroen P. Broks 2018-20"+Left(MKL_NewestVersion(),2)+"~nReleased under the terms of the General Public License version 3~n~n"+MKL_GetAllversions()
 SetGadgetFont about,fwfont
+
+GALE_ConsoleGadget = console

@@ -1,6 +1,6 @@
-Rem
+--[[
 	Scyndi IDE
-	main
+	Script for all this!
 	
 	
 	
@@ -21,29 +21,30 @@ Rem
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
 Version: 18.07.27
-End Rem
-Strict
-Framework maxgui.drivers
-Import    brl.eventqueue
-Import    brl.pngloader
-Import    tricky_units.MKL_Version
-Import    tricky_units.GINI
-Import    tricky_units.Dirry
+]]
+local realprint = print
 
-Import "incbin/incbin.bmx"
-Import "popen/popen.bmx"
+local send = bma.Send
+local platform = bma.Platform()
 
-MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.27"
-MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
+local function print(a,b,c,d,e,f)
+	local r = ""..a
+	if b then r = r .. "\t"..b end
+	if c then r = r .. "\t"..c end
+	if d then r = r .. "\t"..d end
+	if e then r = r .. "\t"..e end
+	if f then r = r .. "\t"..f end
+	send ( r .. "\n" )
+end
 
-Include "inc/targets.bmx"
-Include "inc/gui.bmx"
-Include "inc/events.bmx"
-
-Include "inc/crash.bmx"
-Include "inc/config.bmx"
-Include "inc/editor.bmx"
-
-Include "inc/finit.bmx"	' Fini + init hahah... this is the last init stuff before running
-
-Include "inc/run.bmx"	' Run
+function startpopen(opdracht,omschrijving)
+	print(omschrijving)
+	local bt = io.popen(opdracht)
+	local l
+	repeat
+		l = bt:read("*line")
+		if l then send(l) end
+	until not l
+	bt:close()
+	print("\nOperation completed!"
+end

@@ -198,3 +198,11 @@ Next
 
 
 UpdateWindowMenu menu_file
+
+Function DoNeedFile()
+	Local t=SelectedGadgetItem ( tabber )
+	For Local g:TGadget=EachIn needfile
+		g.setenabled t
+	Next
+End Function
+

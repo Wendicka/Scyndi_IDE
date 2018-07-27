@@ -32,7 +32,7 @@ Repeat
 		Highlight
 	EndIf
 	'If Right(hlcd,2)="00" Print hlcd
-	'If eid Print "Event: "+eid
+	If eid DoNeedFile 'Print "Event: "+eid
 	Select eid
 		Case event_gadgetaction
 			CallBack_Action.call esrc
@@ -41,7 +41,7 @@ Repeat
 				If esrc=p.source 
 					updatesource p
 					p.modified=True
-				endif
+				EndIf
 			Next
 		Case EVENT_GADGETSELECT	
 			For Local p:tsourcepanel = EachIn sources

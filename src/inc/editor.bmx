@@ -293,3 +293,55 @@ Function UpdateSource(panel:tsourcepanel)
 	'"~t~t"+LocalizeString("{{status_line_char}}").Replace("%1",cursorline).Replace("%2",(c+1))
 	SetStatusText SIWIN, statustext
 End Function
+
+
+
+Function Build(p:tsourcepanel)
+	saveall
+	Local b$=AppDir
+	Local a$=""
+	Local flags$
+	?MacOs
+	b:+"/Scyndi_IDE.app/Contents/Resources"
+	?Win32
+	b=Replace(b,"\","/")
+	a:+".exe"
+	If b.find(" ") >= 0
+		Notify "In windows there may be no spaces in the path where Scyndi_IDE is installed or things will not work the way they should. This is a Windows issue, nothing this program can do about!"
+		Return
+	EndIf
+	?
+	Local builder$
+	Select ExtractExt(p.filename)
+		Case "scf","ssf"
+			builder=b+"/scorpion"+a
+			flags="-target Lua" ' temp tag
+		Case "wsf"
+			builder=b+"/wendicka_build"+a
+		Case "gini"
+			Notify "You cannot build GINI files!"
+			Return
+		Default
+			Notify "This IDE does not know how to build that filetype"
+			Return
+	End Select
+	If Not FileType(builder)
+		Notify "I need "+builder+" but it does not appear to be there, sorry!"
+		Return
+	EndIf
+	Local commando$=builder
+	If builder.find(" ") >= 0
+		commando="~q"+commando+"~q"
+	EndIf
+	commando :+ " "+flags+" ~q"+p.filename+"~q"
+	SetStatusText siwin,"Building: "+p.filename+" (this may take take)"
+	startpopen commando,"Building: "+p.filename
+	SetStatusText siwin,"Build: "+p.filename
+End Function
+Function cbbuild()
+	Local i=SelectedGadgetItem(tabber)
+	Local p:tsourcepanel = tsourcepanel ( sources.valueatindex(i-1) )
+	build p
+End Function
+CallBack_Action.add qb_build,	cbbuild
+CallBack_Menu.addnum	4001,	cbbuild
