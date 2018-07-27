@@ -97,6 +97,7 @@ Function HighLightSSF(sp:TGadget)
 	Local incomment=-1
 	Local innumber=-1
 	Local inword=-1
+	Local backslash
 	
 	SetGadgetColor sp,$ff,$ff,$ff,False
 	For Local i=0 Until (Len src)
@@ -123,11 +124,11 @@ Function HighLightSSF(sp:TGadget)
 				EndIf				
 			Case "~q"
 				If incomment < 0
-					If instring < 0
+					If instring < 0 
 						endhlword sp,innumber,i,src
 						endhlword sp,inword,i,src
 						instring=i 
-					Else
+					ElseIf (Not backslash)
 						FormatTextAreaText sp,$b4,$00,$ff,0,instring,(i-instring)+1
 						instring=-1
 					EndIf
@@ -154,7 +155,13 @@ Function HighLightSSF(sp:TGadget)
 			endhlword sp,innumber,i+1,src
 			endhlword sp,inword,i+1,src				
 		EndIf		
+		If (Not backslash) And c="\"
+			backslash=True
+		Else
+			backslash=False
+		EndIf
 	Next
+	
 End Function
 
 Function HighLight()
