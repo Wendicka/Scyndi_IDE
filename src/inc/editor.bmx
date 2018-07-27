@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.27
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.07.26"
+MKL_Version "Scyndi IDE - editor.bmx","18.07.27"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -65,7 +65,7 @@ CallBack_Menu.AddNum 1001,NewFile
 Global hlcd=1000
 
 Global ssfkeywords$[] = "PROGRAM SCRIPT MODULE FOR FORU FOREACH END VAR CONST TYPE IMPORT VOID PROCEDURE PROC FUNC FUNCTION DEF ENUM IF WHILE DO LOOP REPEAT UNTIL STRING INTEGER FLOAT BOOLEAN TRUE FALSE ARRAY MAP BEGIN".split(" ")
-Function EndHLWord(P:tgadget,invar Var,c,str$)
+Function EndHLWord(P:TGadget,invar Var,c,str$)
 	Local word$
 	If invar=-1 Return
 	If c-invar = 1
@@ -91,7 +91,7 @@ Function EndHLWord(P:tgadget,invar Var,c,str$)
 	invar=-1				
 End Function
 
-Function HighLightSSF(sp:tgadget)
+Function HighLightSSF(sp:TGadget)
 	Local src$=GadgetText(sp).ToUpper()
 	Local instring=-1
 	Local incomment=-1
@@ -155,7 +155,8 @@ End Function
 Function HighLight()
 	Local i=SelectedGadgetItem(tabber); If Not i Return
 	Local p:tsourcepanel = tsourcepanel(sources.valueatindex(i-1))
-	Local sp:tgadget = p.source
+	Local sp:TGadget = p.source
+	SetTextAreaTabs  sp,40
 	DebugLog "Highlighting: "+p.filename
 	SetGadgetColor sp,$bf,$ff,$00,False ' Basis
 	Local e$=ExtractExt(p.filename).tolower()
@@ -166,19 +167,19 @@ Function HighLight()
 End Function
 
 Function cbcut()
-	Local g:tgadget=ActiveGadget()
+	Local g:TGadget=ActiveGadget()
 	Local c=GadgetClass(G)
 	'Print "cut"
 	If c=gadget_textarea Or c=gadget_textfield GadgetCut g
 End Function
 Function cbcopy()
-	Local g:tgadget=ActiveGadget()
+	Local g:TGadget=ActiveGadget()
 	Local c=GadgetClass(G)
 	'Print "copy"
 	If c=gadget_textarea Or c=gadget_textfield GadgetCopy g
 End Function
 Function cbpaste()
-	Local g:tgadget=ActiveGadget()
+	Local g:TGadget=ActiveGadget()
 	Local c=GadgetClass(G)
 	'Print "paste"
 	If c=gadget_textarea Or c=gadget_textfield GadgetPaste g
@@ -189,5 +190,59 @@ callback_action.add	qb_paste,	cbpaste
 callback_menu.addnum	2003,		cbcut
 callback_menu.addnum	2004,		cbcopy
 callback_menu.addnum	2005,		cbpaste
+
+
+Function MyOpenFile()
+	Local file$=RequestFile("Please choose a file","Scyndi Source File:ssf,scf;Wendicka Source File:wsf;GINI is not INI:GINI",False)
+	If Not file Return
+	If Not FileType(file) Return Notify("File not found")
+	Local src$=LoadString(file)
+	Local p:tsourcepanel = New tsourcepanel
+	p.named=True
+	p.filename=file
+	SetGadgetText p.source,src
+	ListAddLast sources,p
+	AddGadgetItem tabber,StripDir(p.filename)
+	SelectTab CountList(sources)	
+End Function
+callback_action.add	qb_open,	myopenfile
+callback_menu.addnum	1002,		myopenfile
+
+
+
+Function MySave(p:tsourcepanel,ask=1)
+	' ask: 0 = never
+	'      1 = only if unnamed
+	'      2 = always
+	Local file$=p.filename
+	If (ask=1 And (Not p.named)) Or ask=2
+		file = RequestFile("Please name your file","Scyndi Source File:ssf;Wendicka Source File:wsf;GINI is Not INI:GINI",True)
+		If Not file Return
+		p.filename=file
+		renametabs
+		p.named=true
+	EndIf
+	Local bt:TStream = WriteFile(file)
+	If Not bt Return Notify("Saving ~q"+file+"~q failed")
+	WriteString bt,TextAreaText(p.source)
+	CloseFile bt
+	SetStatusText SIWIN,p.filename+" has been saved"
+End Function
+	
+Function Save()
+	Local i=SelectedGadgetItem(tabber)
+	If Not i Return
+	Local p:tsourcepanel = tsourcepanel(sources.valueatindex(i-1))
+	mysave p
+End Function
+Function SaveAs()
+	Local i=SelectedGadgetItem(tabber)
+	If Not i Return
+	Local p:tsourcepanel = tsourcepanel(sources.valueatindex(i-1))
+	mysave p,2
+End Function
+CallBack_Menu.addnum 	1003,		Save
+callback_menu.addnum 	1004,		SaveAs
+callback_action.add	qb_save,	Save
 
 

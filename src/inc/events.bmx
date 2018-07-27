@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.25
+Version: 18.07.27
 End Rem
-MKL_Version "Scyndi IDE - events.bmx","18.07.25"
+MKL_Version "Scyndi IDE - events.bmx","18.07.27"
 MKL_Lic     "Scyndi IDE - events.bmx","GNU General Public License 3"
 
 Global EID 
