@@ -316,6 +316,9 @@ Function Build(p:tsourcepanel)
 		Case "scf","ssf"
 			builder=b+"/scorpion"+a
 			flags="-target Lua" ' temp tag
+			?win32
+			flags:+" -ansi ON"
+			?
 		Case "wsf"
 			builder=b+"/wendicka_build"+a
 		Case "gini"
