@@ -46,5 +46,5 @@ function startpopen(opdracht,omschrijving)
 		if l then send(l) end
 	until not l
 	bt:close()
-	print("\nOperation completed!"
+	print("\nOperation completed!")
 end
