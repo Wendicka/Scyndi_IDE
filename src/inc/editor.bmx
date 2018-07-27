@@ -76,7 +76,7 @@ Function EndHLWord(P:TGadget,invar Var,c,str$)
 	DebugLog "endword:"+word
 	Select Chr(word[0])
 		Case "$","%","0","1","2","3","4","5","6","7","8","9"
-			FormatTextAreaText p,$00,$b4,$ff,0,invar,(c-invar)+1
+			FormatTextAreaText p,$00,$b4,$ff,0,invar,(c-invar)'+1
 		Case "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","_"
 			Local keyword
 			For Local kw$=EachIn ssfkeywords
@@ -102,6 +102,11 @@ Function HighLightSSF(sp:TGadget)
 	For Local i=0 Until (Len src)
 		Local c$=Chr(src[i])
 		Select c
+			Case "."
+				If Not (innumber<0 And incomment<0 And instring<0)
+					endhlword sp,innumber,i,src
+					endhlword sp,inword,i,src				
+				EndIf			
 			Case "A","B","C","D","E","F"				
 				If innumber<0 And inword<0 And incomment<0 And instring<0
 					inword=i
@@ -242,8 +247,26 @@ Function SaveAs()
 	Local p:tsourcepanel = tsourcepanel(sources.valueatindex(i-1))
 	mysave p,2
 End Function
+Function SaveAll()
+	SetGadgetText console,""
+	For Local p:tsourcepanel = EachIn sources
+		If p.modified
+			AddTextAreaText console,"Saving: "+p.filename+"~n"
+			Mysave p
+		EndIf
+	Next
+	Local r,g,b
+	Local l = Len(GadgetText(console))
+	For Local i=0 Until l
+		r=((Double(i)/l)*255)
+		g=255-r
+		FormatTextAreaText console,r,g,b,0,i,1
+	Next
+End Function
+
 CallBack_Menu.addnum 	1003,		Save
 callback_menu.addnum 	1004,		SaveAs
+callBack_menu.addnum	1005,		saveall
 callback_action.add	qb_save,	Save
 
 
