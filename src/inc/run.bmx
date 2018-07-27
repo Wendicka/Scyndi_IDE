@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.27
 End Rem
-MKL_Version "Scyndi IDE - run.bmx","18.07.26"
+MKL_Version "Scyndi IDE - run.bmx","18.07.27"
 MKL_Lic     "Scyndi IDE - run.bmx","GNU General Public License 3"
 
 Repeat
@@ -32,10 +32,18 @@ Repeat
 		Highlight
 	EndIf
 	'If Right(hlcd,2)="00" Print hlcd
+	'If eid Print "Event: "+eid
 	Select eid
 		Case event_gadgetaction
 			CallBack_Action.call esrc
 			hlcd=20000
+			For Local p:tsourcepanel = EachIn sources
+				If esrc=p.source updatesource p
+			Next
+		Case EVENT_GADGETSELECT	
+			For Local p:tsourcepanel = EachIn sources
+				If esrc=p.source updatesource p
+			Next
 		Case event_menuaction
 			callback_Menu.callnum edata
 		Case event_windowclose,event_appterminate

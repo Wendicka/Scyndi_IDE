@@ -129,7 +129,7 @@ Function SelectTab(atab=-1)
 		'pan.outline.visible=tab=i+1
 		'pan.source.setshow tab=i+1
 		'DebugLog "source: "+i+" > "+Int(i+1)+" > "+tab+"  R:"+Byte(tab=i+1)+"   V:"+pan.panel.visible
-		
+		updatesource pan
 	Next
 	HighLight
 End Function

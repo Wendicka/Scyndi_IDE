@@ -220,7 +220,7 @@ Function MySave(p:tsourcepanel,ask=1)
 		If Not file Return
 		p.filename=file
 		renametabs
-		p.named=true
+		p.named=True
 	EndIf
 	Local bt:TStream = WriteFile(file)
 	If Not bt Return Notify("Saving ~q"+file+"~q failed")
@@ -246,3 +246,25 @@ callback_menu.addnum 	1004,		SaveAs
 callback_action.add	qb_save,	Save
 
 
+
+
+Function UpdateSource(panel:tsourcepanel)
+	Local cursorpos=TextAreaCursor(panel.source,TEXTAREA_CHARS)
+	Local cursorlen=TextAreaSelLen(panel.source,TEXTAREA_CHARS)
+	Local cursorlin=TextAreaLine(panel.source,cursorpos)+1
+	Local	c = cursorpos+cursorlen
+	If cursorlin Then c:-TextAreaChar(panel.source,cursorlin-1)
+	Local statustext$
+	If panel.named statustext=panel.filename
+	statustext :+"~t"   
+	Select ExtractExt(panel.filename)
+		Case "ssf"	statustext :+ "Scyndi Source File"
+		Case "scf"	statustext :+ "Scyndi Code File"
+		Case "wsf"	statustext :+ "Wendicka Source File"
+		Case "gigi"	statustext :+ "GINI Is Not Ini"
+		Default		statustext :+" Unknown File Type"
+	End Select
+	statustext :+ "~tLine:"+cursorlin+"; Char: "+Int(c+1)
+	'"~t~t"+LocalizeString("{{status_line_char}}").Replace("%1",cursorline).Replace("%2",(c+1))
+	SetStatusText SIWIN, statustext
+End Function
