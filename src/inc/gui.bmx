@@ -125,12 +125,13 @@ Function SelectTab(atab=-1)
 	'DebugLog about.visible+" tab:"+Len(tabber.kids)
 	For Local i=0 Until CountList(sources)
 		Local pan:tsourcepanel= tsourcepanel(sources.valueatindex(i))
-		pan.panel.setshow tab=i+1
+		Local thisisit=tab=i+1
+		pan.panel.setshow thisisit
+		If thisisit UpdateSource pan
 		'pan.outline.visible=tab=i+1
 		'pan.source.setshow tab=i+1
 		'DebugLog "source: "+i+" > "+Int(i+1)+" > "+tab+"  R:"+Byte(tab=i+1)+"   V:"+pan.panel.visible
-		updatesource pan
-	Next
+	Next	
 	HighLight
 End Function
 Function tabhit()
