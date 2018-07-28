@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.27
+Version: 18.07.28
 End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.27"
+MKL_Version "Scyndi IDE - gui.bmx","18.07.28"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
 Global NeedFile:TList = New TList
@@ -74,12 +74,19 @@ End Type
 Global srccol:tsrccol[10]
 
 
+Type OutCollect
+	Field line$
+	Field trueline$
+	Field pos
+End Type
+
 Global pancrcol
 Global noname = -1
 Type TSourcePanel
 	Field Panel:TGadget
 	Field Source:TGadget
 	Field Outline:TGadget
+	Field OutlineMap:TMap = New Tmap
 	Field modified:Byte
 	Field named:Byte
 	Field filename:String
@@ -95,6 +102,24 @@ Type TSourcePanel
 		SetGadgetColor source,srccol[pancrcol].r,srccol[pancrcol].g,srccol[pancrcol].b,True
 		SetGadgetFont  source,fwfont
 		pancrcol=olc
+	End Method
+	Method OutRefresh(drem=False)
+		ClearGadgetItems outline
+		For Local k$=EachIn MapKeys(outlinemap)
+			If drem
+				Local tkk$,tkv$,tb$
+				Local pd=k.find(".")
+				tkk=k[..pd]
+				tkv=k[pd+1..]
+				tb=""
+				For Local i=48 Until tkk[Len(tkk)-1] 
+					tb:+"   "
+				Next
+				AddGadgetItem outline,tb+tkv
+			Else
+				AddGadgetItem outline,k
+			EndIf
+		Next
 	End Method
 End Type
 
