@@ -185,6 +185,7 @@ End Function
 Global console:TGadget = CreateTextArea(0,SIWH-200,SIWW,200,SIPan)
 SetGadgetColor console,$00,$00,$00
 SetGadgetColor console,$7f,$7f,$7f,False
+SetGadgetFont console,fwfont
 
 
 ' Menu
