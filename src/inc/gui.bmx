@@ -63,7 +63,7 @@ Global tbh = ClientHeight(tabber)
 Global about:TGadget = CreateLabel("",0,0,tbw,tbh,tabber)
 SetGadgetColor about,$A,$0,$10,True
 SetGadgetColor about,$b4,$ff,0,False
-Global fwfont:Tguifont,LookupGuiFont( GUIFONT_monospaced )
+Global fwfont:Tguifont=LookupGuiFont( GUIFONT_monospaced )
 SetGadgetFont about,fwfont
 
 Type Tsrccol
