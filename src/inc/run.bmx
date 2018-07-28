@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.27
+Version: 18.07.28
 End Rem
-MKL_Version "Scyndi IDE - run.bmx","18.07.27"
+MKL_Version "Scyndi IDE - run.bmx","18.07.28"
 MKL_Lic     "Scyndi IDE - run.bmx","GNU General Public License 3"
 
 Repeat
@@ -42,6 +42,9 @@ Repeat
 					updatesource p
 					p.modified=True
 				EndIf
+				If esrc=p.outline
+					p.outlinegoto
+				endif
 			Next
 		Case EVENT_GADGETSELECT	
 			For Local p:tsourcepanel = EachIn sources

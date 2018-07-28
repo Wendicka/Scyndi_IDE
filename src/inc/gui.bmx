@@ -87,6 +87,7 @@ Type TSourcePanel
 	Field Source:TGadget
 	Field Outline:TGadget
 	Field OutlineMap:TMap = New Tmap
+	Field OutBy:TMap = New Tmap
 	Field modified:Byte
 	Field named:Byte
 	Field filename:String
@@ -105,6 +106,7 @@ Type TSourcePanel
 	End Method
 	Method OutRefresh(drem=False)
 		ClearGadgetItems outline
+		ClearMap OutBY
 		For Local k$=EachIn MapKeys(outlinemap)
 			If drem
 				Local tkk$,tkv$,tb$
@@ -116,10 +118,18 @@ Type TSourcePanel
 					tb:+"   "
 				Next
 				AddGadgetItem outline,tb+tkv
+				MapInsert outBY,tb+tkv,MapValueForKey(outlinemap,k)
 			Else
 				AddGadgetItem outline,k
+				MapInsert outBY,k,MapValueForKey(outlinemap,k)
 			EndIf
 		Next
+	End Method
+	Method OutLineGoTo()
+		Local p=SelectedGadgetItem(outline)		If p<0 Return
+		Local k$=GadgetItemText(outline,p)
+		Local c:outcollect = outcollect(MapValueForKey(outby,k))
+		SelectTextAreaText source,c.pos+(c.pos>0),Len (c.trueline),TEXTAREA_CHARS
 	End Method
 End Type
 
