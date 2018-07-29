@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.27
+Version: 18.07.29
 End Rem
-MKL_Version "Scyndi IDE - events.bmx","18.07.27"
+MKL_Version "Scyndi IDE - events.bmx","18.07.29"
 MKL_Lic     "Scyndi IDE - events.bmx","GNU General Public License 3"
 
 Global EID 
@@ -32,7 +32,7 @@ Global Edata
 Function S_PollEvent()
 	PollEvent
 	EID=EventID()
-	ESrc=tgadget(EventSource())
+	ESrc=TGadget(EventSource())
 	edata=EventData()
 End Function
 
@@ -66,6 +66,7 @@ End Type
 
 Global CallBack_Action:mycallback = New mycallback
 Global callback_Menu:Mycallback = New mycallback
+Global CallBack_Closure:myCallBack = New myCallBack
 
 CallBack_Action.add tabber,tabhit
 

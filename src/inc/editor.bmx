@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.28
+Version: 18.07.29
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.07.28"
+MKL_Version "Scyndi IDE - editor.bmx","18.07.29"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -209,7 +209,7 @@ Function HighLight()
 	SetGadgetColor sp,$bf,$ff,$00,False ' Basis
 	Local e$=ExtractExt(p.filename).tolower()
 	Select e
-		Case "ssf"
+		Case "ssf","scf"
 			HighlightSSF p
 	End Select
 End Function
@@ -391,3 +391,17 @@ Function cbbuild()
 End Function
 CallBack_Action.add qb_build,	cbbuild
 CallBack_Menu.addnum	4001,	cbbuild
+
+
+Function ProgramClosure()
+	For Local P:tsourcepanel = EachIn sources
+		If p.modified
+			Select Proceed(p.filename+" has been modified!~n~nSave before quitting?")
+				Case -1	Return
+				Case  1 MySave p
+			End Select
+		EndIf
+	Next
+	End
+End Function
+callback_closure.add	SIWIN,programclosure
