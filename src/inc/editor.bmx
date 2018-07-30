@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.29
+Version: 18.07.26
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.07.29"
+MKL_Version "Scyndi IDE - editor.bmx","18.07.26"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -103,7 +103,7 @@ Function HighLightSSF(panel:tsourcepanel)
 	Local backslash
 	Local collect:outcollect = New outcollect
 	Local collectstuff:TList = New TList
-	SetGadgetColor sp,$ff,$ff,$ff,False
+	SetGadgetColor sp,$ff,$ff,$ff,False	
 	For Local i=0 Until (Len src)
 		Local c$=Chr(src[i])
 		If c<>"~n" And c<>";"
@@ -182,20 +182,24 @@ Function HighLightSSF(panel:tsourcepanel)
 	Local outl$[]=["PROGRAM SCRIPT MODULE","TYPE","FUNCTION FUNC DEF VOID PROC PROCEDURE"]
 	For collect = EachIn collectstuff
 		'Print "analyse: "+collect.line
-		For Local i=0 Until Len(outl)
-			For Local prefix$=EachIn outl[i].split(" ")			
-				If Prefixed(Upper(collect.line),prefix) 
-					Local id$
-					Local tline$ = Trim(collect.line[Len(prefix)+1..])
-					Local q=0
-					While q<Len(tline) And ((tline[q]>=65 And tline[q]<=90) Or (tline[q]>=48 And tline[q]<=57) Or tline[q]=95 )
-						q:+1
-					Wend
-					id=tline[..q]
-					MapInsert panel.outlinemap,Chr(64+i)+Byte(i<>0)+"."+id,collect
-				EndIf
+		If collect.line And Chr(collect.line[0])="#"
+			FormatTextAreaText sp,$ff,$b4,$00,0,collect.pos+Byte(collect.pos<>0),Len(collect.trueline)
+		Else
+			For Local i=0 Until Len(outl)
+				For Local prefix$=EachIn outl[i].split(" ")			
+					If Prefixed(Upper(collect.line),prefix) 
+						Local id$
+						Local tline$ = Trim(collect.line[Len(prefix)+1..])
+						Local q=0
+						While q<Len(tline) And ((tline[q]>=65 And tline[q]<=90) Or (tline[q]>=48 And tline[q]<=57) Or tline[q]=95 )
+							q:+1
+						Wend
+						id=tline[..q]
+						MapInsert panel.outlinemap,Chr(64+i)+Byte(i<>0)+"."+id,collect
+					EndIf
+				Next
 			Next
-		Next
+		EndIf
 	Next
 	panel.Outrefresh True
 End Function
