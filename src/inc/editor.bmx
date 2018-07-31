@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.26
+Version: 18.07.31
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.07.26"
+MKL_Version "Scyndi IDE - editor.bmx","18.07.31"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -89,6 +89,46 @@ Function EndHLWord(P:TGadget,invar Var,c,str$)
 			EndIf
 	End Select	
 	invar=-1				
+End Function
+
+Function HighLightGINI(panel:tsourcepanel)
+	Local srclines$[]=GadgetText(panel.source).split("~n")
+	Local srcpos[]=New Int[Len srclines]
+	Local mainpos=0
+	Local inkind:Byte=1 ' 0 = rem; 1=vars; 2=list; 255=unknown
+	Local trimline$
+	For Local i=0 Until Len srclines
+		trimline=Upper(Trim(srclines[i]))
+		If Prefixed(trimline,"[")
+			If Suffixed(trimline,"]")
+				FormatTextAreaText panel.source,$ff,$b4,$00,0,mainpos,Len(srclines[i])
+				If trimline="[VARS]"
+					inkind=1
+				ElseIf Prefixed(trimline,"[LIST:")
+					inkind=2
+				ElseIf trimline="[REM]"
+					inkind=0
+				Else
+					inkind=255
+				EndIf
+			Else
+				FormatTextAreaText panel.source,$ff,$00,$00,0,mainpos,Len(srclines[i])
+			EndIf
+		Else
+			Select inkind
+				Case 0	FormatTextAreaText panel.source,$2f,$2f,$2f,0,mainpos,Len(srclines[i])
+				Case 1 
+					Local p=srclines[i].find("=")
+					FormatTextAreaText panel.source,$bf,$ff,$00,0,mainpos,p
+					FormatTextAreaText panel.source,$ff,$ff,$ff,0,mainpos+p,1
+					FormatTextAreaText panel.source,$bf,$00,$ff,0,mainpos+p+1,Len(srclines[i][p+1..])
+				Case 2	FormatTextAreaText panel.source,$00,$b4,$ff,0,mainpos,Len(srclines[i])
+				Default	FormatTextAreaText panel.source,$ff,$00,$00,0,mainpos,Len(srclines[i])
+			End Select
+		EndIf
+		srcpos[i]=mainpos		
+		mainpos:+Len (srclines[i])+1
+	Next		
 End Function
 
 
@@ -215,6 +255,8 @@ Function HighLight()
 	Select e
 		Case "ssf","scf"
 			HighlightSSF p
+		Case "rpf","gini"
+			highlightgini p
 	End Select
 End Function
 
@@ -245,7 +287,7 @@ callback_menu.addnum	2005,		cbpaste
 
 
 Function MyOpenFile()
-	Local file$=RequestFile("Please choose a file","Scyndi Source File:ssf,scf;Wendicka Source File:wsf;GINI is not INI:GINI",False)
+	Local file$=RequestFile("Please choose a file","Scyndi Source File:ssf,scf;Wendicka Source File:wsf;GINI is not INI:GINI;Ryanna Project File:rpf",False)
 	If Not file Return
 	If Not FileType(file) Return Notify("File not found")
 	Local src$=LoadString(file)
@@ -333,7 +375,8 @@ Function UpdateSource(panel:tsourcepanel)
 		Case "ssf"	statustext :+ "Scyndi Source File"
 		Case "scf"	statustext :+ "Scyndi Code File"
 		Case "wsf"	statustext :+ "Wendicka Source File"
-		Case "gigi"	statustext :+ "GINI Is Not Ini"
+		Case "gini"	statustext :+ "GINI Is Not Ini"
+		Case "rpf"	statustext :+ "Ryanna Project File"
 		Default		statustext :+" Unknown File Type"
 	End Select
 	statustext :+ "~tLine:"+cursorlin+"; Char: "+Int(c+1)
