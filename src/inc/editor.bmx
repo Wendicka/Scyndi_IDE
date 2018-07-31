@@ -97,15 +97,28 @@ Function HighLightGINI(panel:tsourcepanel)
 	Local mainpos=0
 	Local inkind:Byte=1 ' 0 = rem; 1=vars; 2=list; 255=unknown
 	Local trimline$
-	For Local i=0 Until Len srclines
+	ClearMap panel.OutlineMap
+	Local varblock
+	Local collect:outcollect
+	For Local i=0 Until Len srclines		
 		trimline=Upper(Trim(srclines[i]))
+		collect = New outcollect
+		collect.line=trimline
+		collect.trueline=srclines[i]
+		collect.pos=mainpos - (mainpos<>0)
 		If Prefixed(trimline,"[")
 			If Suffixed(trimline,"]")
 				FormatTextAreaText panel.source,$ff,$b4,$00,0,mainpos,Len(srclines[i])
 				If trimline="[VARS]"
 					inkind=1
+					varblock:+1
+					MapInsert panel.OutlineMap,"Variable Block #"+varblock,collect
 				ElseIf Prefixed(trimline,"[LIST:")
 					inkind=2
+					Local tl$=Trim(srclines[i])
+					tl=tl[6..]
+					tl=tl[..Len(tl)-1]
+					MapInsert panel.OutlineMap,"List: "+tl,collect
 				ElseIf trimline="[REM]"
 					inkind=0
 				Else
@@ -128,7 +141,8 @@ Function HighLightGINI(panel:tsourcepanel)
 		EndIf
 		srcpos[i]=mainpos		
 		mainpos:+Len (srclines[i])+1
-	Next		
+	Next	
+	panel.Outrefresh 
 End Function
 
 
