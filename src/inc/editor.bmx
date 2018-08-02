@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.08.01
+Version: 18.08.02
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.08.01"
+MKL_Version "Scyndi IDE - editor.bmx","18.08.02"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -64,7 +64,7 @@ CallBack_Menu.AddNum 1001,NewFile
 
 Global hlcd=1000
 
-Global ssfkeywords$[] = "PROGRAM SCRIPT MODULE USE FOR FORU FOREACH END VAR CONST TYPE IMPORT VOID PROCEDURE PROC FUNC FUNCTION DEF ENUM IF WHILE DO LOOP REPEAT UNTIL STRING INTEGER FLOAT BOOLEAN TRUE FALSE ARRAY MAP BEGIN MOD OR AND NOT RETURN".split(" ")
+Global ssfkeywords$[] = "PROGRAM SCRIPT MODULE USE FOR FORU FOREACH END VAR CONST TYPE IMPORT VOID PROCEDURE PROC FUNC FUNCTION DEF ENUM IF ELSEIF ELIF WHILE DO LOOP REPEAT UNTIL STRING INTEGER FLOAT BOOLEAN TRUE FALSE ARRAY MAP BEGIN MOD OR AND NOT RETURN PURECODE".split(" ")
 Function EndHLWord(P:TGadget,invar Var,c,str$)
 	Local word$
 	If invar=-1 Return
