@@ -306,11 +306,12 @@ Function MyOpenFile()
 	If Not FileType(file) Return Notify("File not found")
 	Local src$=LoadString(file)
 	Local p:tsourcepanel 
-	If p=EachIn sources
+	For p=EachIn sources
 		If p.filename=file
 			Notify "That file is already loaded!"
 			Return
-		endif
+		EndIf
+	next
 	p = New tsourcepanel
 	p.named=True
 	p.filename=file
