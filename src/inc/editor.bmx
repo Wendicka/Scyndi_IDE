@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.08.02
+Version: 18.08.04
 End Rem
 
-MKL_Version "Scyndi IDE - editor.bmx","18.08.02"
+MKL_Version "Scyndi IDE - editor.bmx","18.08.04"
 MKL_Lic     "Scyndi IDE - editor.bmx","GNU General Public License 3"
 
 Global Sources:TList = New TList
@@ -233,7 +233,7 @@ Function HighLightSSF(panel:tsourcepanel)
 	collect.line=Trim(collect.line)
 	ListAddLast collectstuff,collect.line
 	ClearMap panel.OutlineMap
-	Local outl$[]=["PROGRAM SCRIPT MODULE","TYPE","FUNCTION FUNC DEF VOID PROC PROCEDURE"]
+	Local outl$[]=["PROGRAM SCRIPT MODULE","TYPE","FUNCTION FUNC DEF VOID PROCEDURE PROC"]
 	For collect = EachIn collectstuff
 		'Print "analyse: "+collect.line
 		If collect.line And Chr(collect.line[0])="#"
@@ -241,7 +241,7 @@ Function HighLightSSF(panel:tsourcepanel)
 		Else
 			For Local i=0 Until Len(outl)
 				For Local prefix$=EachIn outl[i].split(" ")			
-					If Prefixed(Upper(collect.line),prefix) 
+					If Prefixed(Upper(collect.line),prefix+" ") Or Prefixed(Upper(collect.line),prefix+"~t") 
 						Local id$
 						Local tline$ = Trim(collect.line[Len(prefix)+1..])
 						Local q=0
@@ -311,7 +311,7 @@ Function MyOpenFile()
 			Notify "That file is already loaded!"
 			Return
 		EndIf
-	next
+	Next
 	p = New tsourcepanel
 	p.named=True
 	p.filename=file
