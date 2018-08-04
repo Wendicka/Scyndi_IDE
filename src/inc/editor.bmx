@@ -299,10 +299,7 @@ callback_menu.addnum	2003,		cbcut
 callback_menu.addnum	2004,		cbcopy
 callback_menu.addnum	2005,		cbpaste
 
-
-Function MyOpenFile()
-	Local file$=RequestFile("Please choose a file","Scyndi Source File:ssf,scf;Wendicka Source File:wsf;GINI is not INI:GINI;Ryanna Project File:rpf",False)
-	If Not file Return
+Function TrueOpenFile(file$)
 	If Not FileType(file) Return Notify("File not found")
 	Local src$=LoadString(file)
 	Local p:tsourcepanel 
@@ -320,9 +317,19 @@ Function MyOpenFile()
 	AddGadgetItem tabber,StripDir(p.filename)
 	SelectTab CountList(sources)	
 End Function
+
+Function MyOpenFile()
+	Local file$=RequestFile("Please choose a file","Scyndi Source File:ssf,scf;Wendicka Source File:wsf;GINI is not INI:GINI;Ryanna Project File:rpf",False)
+	If Not file Return
+	TrueOpenFile file
+End Function
 callback_action.add	qb_open,	myopenfile
 callback_menu.addnum	1002,		myopenfile
 
+Function AcceptFile()
+	TrueOpenFile EExtraString
+End Function
+callback_file.add	SIWIN,		Acceptfile
 
 
 Function MySave(p:tsourcepanel,ask=1)

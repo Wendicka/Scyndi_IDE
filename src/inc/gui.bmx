@@ -26,7 +26,7 @@ MKL_Version "Scyndi IDE - gui.bmx","18.08.04"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
 Global NeedFile:TList = New TList
-Global SIWin:TGadget = CreateWindow("",0,0,ClientWidth(Desktop()),ClientHeight(Desktop()),Null,window_titlebar|window_status|window_menu)
+Global SIWin:TGadget = CreateWindow("",0,0,ClientWidth(Desktop()),ClientHeight(Desktop()),Null,window_titlebar|window_status|window_menu|WINDOW_ACCEPTFILES)
 Global SIWW = ClientWidth (SIWIN)
 Global SIWH = ClientHeight(SIWIN)
 Global SIPan:TGadget = CreatePanel(0,0,SIWW,SIWH,SIWin)

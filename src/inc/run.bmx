@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.29
+Version: 18.08.04
 End Rem
-MKL_Version "Scyndi IDE - run.bmx","18.07.29"
+MKL_Version "Scyndi IDE - run.bmx","18.08.04"
 MKL_Lic     "Scyndi IDE - run.bmx","GNU General Public License 3"
 
 Repeat
@@ -52,6 +52,8 @@ Repeat
 			Next
 		Case event_menuaction
 			callback_Menu.callnum edata
+		Case EVENT_WINDOWACCEPT
+			callback_FIle.call esrc
 		Case event_windowclose
 			callback_closure.call esrc
 		Case event_appterminate

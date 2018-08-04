@@ -20,20 +20,24 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.29
+Version: 18.08.04
 End Rem
-MKL_Version "Scyndi IDE - events.bmx","18.07.29"
+MKL_Version "Scyndi IDE - events.bmx","18.08.04"
 MKL_Lic     "Scyndi IDE - events.bmx","GNU General Public License 3"
 
 Global EID 
 Global ESrc:TGadget 
 Global Edata
+Global EExtra:Object
+Global EExtraString$
 
 Function S_PollEvent()
 	PollEvent
 	EID=EventID()
 	ESrc=TGadget(EventSource())
 	edata=EventData()
+	eextra=EventExtra()
+	eextrastring=string(eextra)
 End Function
 
 Type tcbfun
@@ -67,6 +71,7 @@ End Type
 Global CallBack_Action:mycallback = New mycallback
 Global callback_Menu:Mycallback = New mycallback
 Global CallBack_Closure:myCallBack = New myCallBack
+Global callback_File:mycallback = New myCallBack
 
 CallBack_Action.add tabber,tabhit
 
