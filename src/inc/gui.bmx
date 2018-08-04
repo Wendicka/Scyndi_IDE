@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.07.28
+Version: 18.08.04
 End Rem
-MKL_Version "Scyndi IDE - gui.bmx","18.07.28"
+MKL_Version "Scyndi IDE - gui.bmx","18.08.04"
 MKL_Lic     "Scyndi IDE - gui.bmx","GNU General Public License 3"
 
 Global NeedFile:TList = New TList
@@ -233,7 +233,7 @@ Next
 
 
 
-UpdateWindowMenu menu_file
+UpdateWindowMenu SIWin
 
 Function DoNeedFile()
 	Local t=SelectedGadgetItem ( tabber )
