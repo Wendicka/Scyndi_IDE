@@ -36,6 +36,9 @@ Import "popen/popen.bmx"
 MKL_Version "Scyndi IDE - Scyndi_IDE.bmx","18.07.27"
 MKL_Lic     "Scyndi IDE - Scyndi_IDE.bmx","GNU General Public License 3"
 
+AppTitle = "Scyndi Integrated Development Environment - "+MKL_NewestVersion()
+
+
 Include "inc/targets.bmx"
 Include "inc/gui.bmx"
 Include "inc/events.bmx"

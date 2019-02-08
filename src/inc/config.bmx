@@ -29,8 +29,15 @@ Const cconfigfile$ = "$AppSupport$/Scyndi_IDE/Config.gini"
 Global configfile$ = Dirry(cconfigfile)
 
 Global config:TIni = New TIni
+config.D "target","NodeJS"
 config.D "NoName",Dirry("$AppSupport$/Scyndi_IDE/NoName/")
 If Not CreateDir(Dirry("$AppSupport$/Scyndi_IDE/NoName/"),True) crash "I could not create "+Dirry("$AppSupport$/Scyndi_IDE/NoName/")
 
 If FileType(configfile) LoadIni configfile,config,True
 
+For Local i=0 Until Len(targets)
+	If targets[i]=config.c("target") 
+		edata=5000+i
+		PickTarget
+	EndIf
+Next

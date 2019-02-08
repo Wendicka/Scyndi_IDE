@@ -412,6 +412,20 @@ Function UpdateSource(panel:tsourcepanel)
 	SetStatusText SIWIN, statustext
 End Function
 
+Function PickTarget()
+	Local i = edata-5000
+	Local m$ = GadgetText(menu_targets[i])
+	config.d "target",m
+	Print "Use picked target: "+m®
+	For Local ak=0 Until (Len targets)
+		If i=ak 
+			CheckMenu menu_targets[ak]
+		Else
+			UncheckMenu menu_targets[ak]
+		End If
+	Next
+End Function
+For Local i=0 Until (Len targets) callback_menu.addnum 5000+i,PickTarget Next
 
 
 Function Build(p:tsourcepanel)
@@ -433,7 +447,7 @@ Function Build(p:tsourcepanel)
 	Select ExtractExt(p.filename)
 		Case "scf","ssf"
 			builder=b+"/scorpion"+a
-			flags="-target Lua" ' temp tag
+			flags="-target "+config.C("target") ' temp tag
 			?win32
 			flags:+" -ansi ON"
 			?
@@ -477,6 +491,8 @@ Function ProgramClosure()
 			End Select
 		EndIf
 	Next
+	Print "Writing: "+configfile
+	SaveIni configfile,config
 	End
 End Function
 callback_closure.add	SIWIN,programclosure

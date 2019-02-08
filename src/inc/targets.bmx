@@ -28,10 +28,11 @@ MKL_Lic     "Scyndi IDE - targets.bmx","GNU General Public License 3"
 Global targets$[]
 Function init_targets()
 	Local mtargets:TList=New TList
-	ListAddLast mtargets,"Wendicka"
+	'ListAddLast mtargets,"Wendicka"
 	ListAddLast mtargets,"Lua"
-	ListAddLast mtargets,"Php"
-	ListAddLast mtargets,"Go"
+	ListAddLast mtargets,"NodeJS"
+	'ListAddLast mtargets,"Php"
+	'ListAddLast mtargets,"Go"
 	'targets=String[](ListToArray(mtargets))
 	targets = New String[CountList(mtargets)]
 	For Local i=0 Until CountList(mtargets)
@@ -40,4 +41,5 @@ Function init_targets()
 End Function
 init_targets
 
+Global chosentarget=0
 

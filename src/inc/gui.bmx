@@ -226,8 +226,10 @@ Global menu_project:TGadget = CreateMenu("Project",0,WindowMenu(SIWIN))
 ListAddLast needfile,CreateMenu("Build",4001,menu_project,key_b,modifier_command)
 CreateMenu "",0,menu_project
 Global menu_target:TGadget = CreateMenu("Target",0,menu_project)
+Global menu_targets:TGadget[]= New TGadget [Len targets]
 For Local i=0 Until Len(targets)
-	CreateMenu targets[i],5000+i,menu_target
+	menu_targets[i]= CreateMenu(targets[i],5000+i,menu_target)
+	If i=chosentarget CheckMenu menu_targets[i]
 Next
 
 
